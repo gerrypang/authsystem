@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd    
+                        http://www.springframework.org/schema/context    
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd    
+                        http://www.springframework.org/schema/mvc    
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 数据源 -->
+	<bean id="dataSourceProperties" class="com.gerry.authsystem.until.PropertiesEncryptFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="user">rnmq</prop>
+				<prop key="password">rnmq</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="dataSourceTarget" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="properties" ref="dataSourceProperties" />
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/mimessage" />
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<!-- 系统初始化连接数 -->
+		<property name="initialPoolSize" value="10" />
+		<!-- 最大连接数 -->
+		<property name="maxPoolSize" value="300" />
+		<!-- 最小连接数 -->
+		<property name="minPoolSize" value="10" />
+		<!--最大空闲时间,600秒（10分钟）内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+		<property name="maxIdleTime" value="0" />
+		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
+		<property name="acquireIncrement" value="5" />
+		<!--每60秒检查所有连接池中的空闲连接。Default: 0 -->
+		<property name="idleConnectionTestPeriod" value="60" />
+		<!-- 每次从pool内checkout连接时测试有效性（同步操作） 程序每次数据库调用都连接有效性， -->
+		<!-- 若无效关闭此连接并剔除出pool， 从pool内取其他连接，慎用，会造成至少多一倍的数据库调用。Default：false -->
+		<property name="testConnectionOnCheckout" value="false" />
+		<!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->
+		<property name="acquireRetryAttempts" value="30" />
+		<!--两次连接中间隔时间，单位毫秒。Default: 1000 -->
+		<property name="acquireRetryDelay" value="1000" />
+	</bean>
+
+	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+		<property name="dataSource" ref="dataSourceTarget" />
+		<!-- 自动扫描mapping.xml文件 -->
+		<property name="mapperLocations" value="classpath:com/gerry/authsystem/mapping/*.xml" />
+	</bean>
+
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.gerry.authsystem.service" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+	<bean
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		id="transactionManager">
+		<property name="dataSource" ref="dataSourceTarget" />
+	</bean>
+	<!-- 事务注解驱动，标注@Transactional的类和方法将具有事务性 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>
