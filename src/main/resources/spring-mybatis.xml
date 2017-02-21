@@ -12,6 +12,7 @@
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
                         http://www.springframework.org/schema/tx
                         http://www.springframework.org/schema/tx/spring-tx.xsd">
+                        
 	<!-- 数据源 -->
 	<bean id="dataSourceProperties" class="com.gerry.authsystem.until.PropertiesEncryptFactoryBean">
 		<property name="properties">
@@ -24,7 +25,7 @@
 
 	<bean id="dataSourceTarget" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="properties" ref="dataSourceProperties" />
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/mimessage" />
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/sepmis" />
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<!-- 系统初始化连接数 -->
 		<property name="initialPoolSize" value="10" />
@@ -61,11 +62,10 @@
 	</bean>
 
 	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
-	<bean
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-		id="transactionManager">
+	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
 		<property name="dataSource" ref="dataSourceTarget" />
 	</bean>
+	
 	<!-- 事务注解驱动，标注@Transactional的类和方法将具有事务性 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
