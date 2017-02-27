@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.IDao.SysUserMapper">
+  <resultMap id="BaseResultMap" type="test.domain.SysUser">
+    <id column="UserCode" jdbcType="VARCHAR" property="usercode" />
+    <result column="ComCode" jdbcType="VARCHAR" property="comcode" />
+    <result column="UserName" jdbcType="VARCHAR" property="username" />
+    <result column="PassWord" jdbcType="VARCHAR" property="password" />
+    <result column="TelePhone" jdbcType="VARCHAR" property="telephone" />
+    <result column="Email" jdbcType="VARCHAR" property="email" />
+    <result column="ValidStatus" jdbcType="VARCHAR" property="validstatus" />
+    <result column="Reverse1" jdbcType="VARCHAR" property="reverse1" />
+    <result column="Reverse2" jdbcType="VARCHAR" property="reverse2" />
+    <result column="Reverse3" jdbcType="VARCHAR" property="reverse3" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    UserCode, ComCode, UserName, PassWord, TelePhone, Email, ValidStatus, Reverse1, Reverse2, 
+    Reverse3
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sysuser
+    where UserCode = #{usercode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sysuser
+    where UserCode = #{usercode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="test.domain.SysUser">
+    insert into sysuser (UserCode, ComCode, UserName, 
+      PassWord, TelePhone, Email, 
+      ValidStatus, Reverse1, Reverse2, 
+      Reverse3)
+    values (#{usercode,jdbcType=VARCHAR}, #{comcode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{validstatus,jdbcType=VARCHAR}, #{reverse1,jdbcType=VARCHAR}, #{reverse2,jdbcType=VARCHAR}, 
+      #{reverse3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="test.domain.SysUser">
+    insert into sysuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usercode != null">
+        UserCode,
+      </if>
+      <if test="comcode != null">
+        ComCode,
+      </if>
+      <if test="username != null">
+        UserName,
+      </if>
+      <if test="password != null">
+        PassWord,
+      </if>
+      <if test="telephone != null">
+        TelePhone,
+      </if>
+      <if test="email != null">
+        Email,
+      </if>
+      <if test="validstatus != null">
+        ValidStatus,
+      </if>
+      <if test="reverse1 != null">
+        Reverse1,
+      </if>
+      <if test="reverse2 != null">
+        Reverse2,
+      </if>
+      <if test="reverse3 != null">
+        Reverse3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usercode != null">
+        #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="comcode != null">
+        #{comcode,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="validstatus != null">
+        #{validstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="reverse1 != null">
+        #{reverse1,jdbcType=VARCHAR},
+      </if>
+      <if test="reverse2 != null">
+        #{reverse2,jdbcType=VARCHAR},
+      </if>
+      <if test="reverse3 != null">
+        #{reverse3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="test.domain.SysUser">
+    update sysuser
+    <set>
+      <if test="comcode != null">
+        ComCode = #{comcode,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        UserName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PassWord = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        TelePhone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        Email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="validstatus != null">
+        ValidStatus = #{validstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="reverse1 != null">
+        Reverse1 = #{reverse1,jdbcType=VARCHAR},
+      </if>
+      <if test="reverse2 != null">
+        Reverse2 = #{reverse2,jdbcType=VARCHAR},
+      </if>
+      <if test="reverse3 != null">
+        Reverse3 = #{reverse3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UserCode = #{usercode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="test.domain.SysUser">
+    update sysuser
+    set ComCode = #{comcode,jdbcType=VARCHAR},
+      UserName = #{username,jdbcType=VARCHAR},
+      PassWord = #{password,jdbcType=VARCHAR},
+      TelePhone = #{telephone,jdbcType=VARCHAR},
+      Email = #{email,jdbcType=VARCHAR},
+      ValidStatus = #{validstatus,jdbcType=VARCHAR},
+      Reverse1 = #{reverse1,jdbcType=VARCHAR},
+      Reverse2 = #{reverse2,jdbcType=VARCHAR},
+      Reverse3 = #{reverse3,jdbcType=VARCHAR}
+    where UserCode = #{usercode,jdbcType=VARCHAR}
+  </update>
+</mapper>
