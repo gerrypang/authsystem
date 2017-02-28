@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="test.IDao.SysUserMapper">
-  <resultMap id="BaseResultMap" type="test.domain.SysUser">
+<mapper namespace="com.gerry.authsystem.dao.ISysUserDao">
+  <resultMap id="BaseResultMap" type="com.gerry.authsystem.entity.SysUser">
     <id column="UserCode" jdbcType="VARCHAR" property="usercode" />
     <result column="ComCode" jdbcType="VARCHAR" property="comcode" />
     <result column="UserName" jdbcType="VARCHAR" property="username" />
@@ -13,31 +13,51 @@
     <result column="Reverse2" jdbcType="VARCHAR" property="reverse2" />
     <result column="Reverse3" jdbcType="VARCHAR" property="reverse3" />
   </resultMap>
+  
   <sql id="Base_Column_List">
-    UserCode, ComCode, UserName, PassWord, TelePhone, Email, ValidStatus, Reverse1, Reverse2, 
-    Reverse3
+    UserCode, ComCode, UserName, PassWord, TelePhone, Email, ValidStatus, Reverse1, Reverse2, Reverse3
   </sql>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from sysuser
     where UserCode = #{usercode,jdbcType=VARCHAR}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from sysuser
     where UserCode = #{usercode,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="test.domain.SysUser">
-    insert into sysuser (UserCode, ComCode, UserName, 
-      PassWord, TelePhone, Email, 
-      ValidStatus, Reverse1, Reverse2, 
-      Reverse3)
-    values (#{usercode,jdbcType=VARCHAR}, #{comcode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{validstatus,jdbcType=VARCHAR}, #{reverse1,jdbcType=VARCHAR}, #{reverse2,jdbcType=VARCHAR}, 
-      #{reverse3,jdbcType=VARCHAR})
+  
+  <insert id="insert" parameterType="com.gerry.authsystem.entity.SysUser">
+    insert into sysuser (
+      UserCode, 
+      ComCode, 
+      UserName, 
+      PassWord, 
+      TelePhone, 
+      Email, 
+      ValidStatus, 
+      Reverse1, 
+      Reverse2, 
+      Reverse3
+    )
+    values (
+      #{usercode,jdbcType=VARCHAR}, 
+      #{comcode,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, 
+      #{validstatus,jdbcType=VARCHAR}, 
+      #{reverse1,jdbcType=VARCHAR}, 
+      #{reverse2,jdbcType=VARCHAR}, 
+      #{reverse3,jdbcType=VARCHAR}
+    )
   </insert>
-  <insert id="insertSelective" parameterType="test.domain.SysUser">
+  
+  <insert id="insertSelective" parameterType="com.gerry.authsystem.entity.SysUser">
     insert into sysuser
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="usercode != null">
@@ -104,7 +124,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="test.domain.SysUser">
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.gerry.authsystem.entity.SysUser">
     update sysuser
     <set>
       <if test="comcode != null">
@@ -137,9 +158,10 @@
     </set>
     where UserCode = #{usercode,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="test.domain.SysUser">
-    update sysuser
-    set ComCode = #{comcode,jdbcType=VARCHAR},
+  
+  <update id="updateByPrimaryKey" parameterType="com.gerry.authsystem.entity.SysUser">
+    update sysuser set 
+      ComCode = #{comcode,jdbcType=VARCHAR},
       UserName = #{username,jdbcType=VARCHAR},
       PassWord = #{password,jdbcType=VARCHAR},
       TelePhone = #{telephone,jdbcType=VARCHAR},

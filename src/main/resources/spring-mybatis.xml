@@ -12,21 +12,25 @@
                         http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
                         http://www.springframework.org/schema/tx
                         http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!-- 自动扫描 -->  
+    <context:component-scan base-package="com.gerry.authsystem" />
                         
 	<!-- 数据源 -->
-	<bean id="dataSourceProperties" class="com.gerry.authsystem.until.PropertiesEncryptFactoryBean">
-		<property name="properties">
-			<props>
-				<prop key="user">rnmq</prop>
-				<prop key="password">rnmq</prop>
-			</props>
-		</property>
-	</bean>
+<!-- 	<bean id="dataSourceProperties" class="com.gerry.authsystem.until.PropertiesEncryptFactoryBean"> -->
+<!-- 		<property name="properties"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="user">rnmq</prop> -->
+<!-- 				<prop key="password">rnmq</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
 
 	<bean id="dataSourceTarget" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-		<property name="properties" ref="dataSourceProperties" />
+<!-- 		<property name="properties" ref="dataSourceProperties" /> -->
 		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/sepmis" />
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="user" value="root"/>
+		<property name="password" value="root"/>
 		<!-- 系统初始化连接数 -->
 		<property name="initialPoolSize" value="10" />
 		<!-- 最大连接数 -->
@@ -54,7 +58,7 @@
 		<!-- 自动扫描mapping.xml文件 -->
 		<property name="mapperLocations" value="classpath:com/gerry/authsystem/mapping/*.xml" />
 	</bean>
-
+	
 	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.gerry.authsystem.dao" />

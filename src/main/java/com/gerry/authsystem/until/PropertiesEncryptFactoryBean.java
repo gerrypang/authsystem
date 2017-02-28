@@ -47,6 +47,7 @@ public class PropertiesEncryptFactoryBean implements FactoryBean{
     private String deEncryptPassword(String originalPassword){  
         return deEncryptString(originalPassword);  
     }  
+    
     //Ω‚√‹ 
     private  String deEncryptString(String originalString){  
         StringBuilder newString = new StringBuilder();  
@@ -58,7 +59,7 @@ public class PropertiesEncryptFactoryBean implements FactoryBean{
         return newString.toString();  
     } 
     
-    private static  String encryptString(String originalString){  
+    private String encryptString(String originalString){  
         StringBuilder newString = new StringBuilder();  
         for (int i = 0; i < originalString.length(); i++) {  
             char eachChar= originalString.charAt(i);  
