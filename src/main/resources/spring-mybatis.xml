@@ -56,7 +56,7 @@
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
 		<property name="dataSource" ref="dataSourceTarget" />
 		<!-- 自动扫描mapping.xml文件 -->
-		<property name="mapperLocations" value="classpath:com/gerry/authsystem/mapping/*.xml" />
+		<property name="mapperLocations" value="classpath:/mapping/*.xml" />
 	</bean>
 	
 	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
