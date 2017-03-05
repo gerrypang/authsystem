@@ -15,41 +15,43 @@
     <!-- 自动扫描 -->  
     <context:component-scan base-package="com.gerry.authsystem" />
                         
-	<!-- 数据源 -->
-<!-- 	<bean id="dataSourceProperties" class="com.gerry.authsystem.until.PropertiesEncryptFactoryBean"> -->
-<!-- 		<property name="properties"> -->
-<!-- 			<props> -->
-<!-- 				<prop key="user">rnmq</prop> -->
-<!-- 				<prop key="password">rnmq</prop> -->
-<!-- 			</props> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
+	<bean id="dataSourceTarget" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+		<property name="url" value="${jdbcUrl}" />
+		<property name="driverClassName" value="${driverClass}" />
+		<property name="username" value="${username}"/>
+		<property name="password" value="${password}"/>
 
-	<bean id="dataSourceTarget" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-<!-- 		<property name="properties" ref="dataSourceProperties" /> -->
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/sepmis" />
-		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="user" value="root"/>
-		<property name="password" value="root"/>
-		<!-- 系统初始化连接数 -->
-		<property name="initialPoolSize" value="10" />
-		<!-- 最大连接数 -->
-		<property name="maxPoolSize" value="300" />
-		<!-- 最小连接数 -->
-		<property name="minPoolSize" value="10" />
-		<!--最大空闲时间,600秒（10分钟）内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
-		<property name="maxIdleTime" value="0" />
-		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
-		<property name="acquireIncrement" value="5" />
-		<!--每60秒检查所有连接池中的空闲连接。Default: 0 -->
-		<property name="idleConnectionTestPeriod" value="60" />
-		<!-- 每次从pool内checkout连接时测试有效性（同步操作） 程序每次数据库调用都连接有效性， -->
-		<!-- 若无效关闭此连接并剔除出pool， 从pool内取其他连接，慎用，会造成至少多一倍的数据库调用。Default：false -->
-		<property name="testConnectionOnCheckout" value="false" />
-		<!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->
-		<property name="acquireRetryAttempts" value="30" />
-		<!--两次连接中间隔时间，单位毫秒。Default: 1000 -->
-		<property name="acquireRetryDelay" value="1000" />
+		<!-- 最大连接数量 -->
+		<property name="maxActive" value="20" />
+		<!-- 初始化连接 -->
+		<property name="initialSize" value="1" />
+		<!-- 获取连接时最大等待时间，单位毫秒 -->
+		<property name="maxWait" value="60000" />  
+		<!-- 最小连接池数量 -->
+    	<property name="minIdle" value="1" />
+    	<!-- 两个含义：1) Destroy线程会检测连接的间隔时间 2) testWhileIdle的判断依据 -->
+    	<property name="timeBetweenEvictionRunsMillis" value="60000" />  
+    	<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+	    <property name="minEvictableIdleTimeMillis" value="300000" />  
+	    
+    	<!-- 用来检测连接是否有效的sql，要求是一个查询语句。-->
+    	<!-- 如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用。 -->
+	    <property name="validationQuery" value="SELECT 'x'" />  
+	   	<!-- 建议配置为true，不影响性能，并且保证安全性。-->
+	   	<!-- 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效-->
+	    <property name="testWhileIdle" value="true" />  
+    	<!-- 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。-->
+	    <property name="testOnBorrow" value="false" />  
+    	<!-- 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能-->
+	    <property name="testOnReturn" value="false" /> 
+	     
+    	<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+    	<!-- 如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。分库分表较多的数据库，建议配置为false。-->
+	    <property name="poolPreparedStatements" value="false" />  
+	    <property name="maxPoolPreparedStatementPerConnectionSize" value="50" /> 
+	    
+	   	<!-- druid 连接池的  监控统计用的filter:stat 日志用的filter:log4j 防御sql注入的filter:wall-->
+		<property name="filters" value="stat" />
 	</bean>
 
 	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
