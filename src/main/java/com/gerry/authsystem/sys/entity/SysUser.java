@@ -1,4 +1,4 @@
-package com.gerry.authsystem.entity;
+package com.gerry.authsystem.sys.entity;
 
 public class SysUser {
     private String usercode;

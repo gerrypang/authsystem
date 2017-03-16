@@ -48,17 +48,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<jsp-config>
-		<taglib>  
-	   		<taglib-uri>sitemesh-page</taglib-uri>  
-	  		<taglib-location>/WEB-INF/tlds/sitemesh-page.tld</taglib-location>  
-	 	</taglib>  
-		<taglib>  
-		   <taglib-uri>sitemesh-decorator</taglib-uri>  
-		   <taglib-location>/WEB-INF/tlds/sitemesh-decorator.tld</taglib-location>  
-		</taglib>  
-	</jsp-config>
-	
 	<!-- Spring 刷新Introspector防止内存泄露 此监听器必须放在所有监听器前面 -->
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
@@ -83,6 +72,16 @@
 		<servlet-name>SpringMVC</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+	
+	<!-- 登录验证码Servlet -->
+	<servlet>
+		<servlet-name>randomCode</servlet-name>
+		<servlet-class>com.gerry.authsystem.sys.until.ValidateCodeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>randomCode</servlet-name>
+		<url-pattern>/login/randomCode</url-pattern>
+	</servlet-mapping> 
 	
 	<!-- DruidStatView 监控 Servlet -->
 	<servlet>

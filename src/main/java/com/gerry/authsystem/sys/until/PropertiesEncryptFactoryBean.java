@@ -1,4 +1,4 @@
-package com.gerry.authsystem.until;
+package com.gerry.authsystem.sys.until;
 
 import java.util.Properties;
 import org.springframework.beans.factory.FactoryBean;

@@ -1,6 +1,6 @@
-package com.gerry.authsystem.dao;
+package com.gerry.authsystem.sys.dao;
 
-import com.gerry.authsystem.entity.SysUser;
+import com.gerry.authsystem.sys.entity.SysUser;
 
 public interface ISysUserDao {
     int deleteByPrimaryKey(String usercode);

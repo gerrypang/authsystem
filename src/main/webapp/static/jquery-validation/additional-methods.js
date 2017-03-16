@@ -12,11 +12,11 @@ jQuery.validator.addMethod( "checkEmail",function(value,element){
 
 jQuery.validator.addMethod("ip", function(value, element) {
 	return this.optional(element) || (/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/.test(value) && (RegExp.$1 <256 && RegExp.$2<256 && RegExp.$3<256 && RegExp.$4<256));   
-}, "请输入合法的IP地址");
+}, "请填写合法的IP地址");
 
 jQuery.validator.addMethod("abc",function(value, element) {
 	return this.optional(element) || /^[a-zA-Z0-9_]*$/.test(value);
-},"请输入字母数字或下划线");
+},"请填写字母数字或下划线");
 
 jQuery.validator.addMethod("username",function(value, element) {
 	return this.optional(element) || /^[a-zA-Z0-9][a-zA-Z0-9_]{2,19}$/.test(value);
@@ -24,7 +24,7 @@ jQuery.validator.addMethod("username",function(value, element) {
 
 jQuery.validator.addMethod("noEqualTo",function(value, element, param) {
 	return value != $(param).val();
-},"请再次输入不同的值");
+},"请再次填写不同的值");
 
 //真实姓名验证
 jQuery.validator.addMethod("realName", function(value, element) {
@@ -69,7 +69,12 @@ jQuery.validator.addMethod("qq", function(value, element) {
 //校验身份证号
 jQuery.validator.addMethod("card",function(value, element) {
 	return this.optional(element) || checkIdcard(value);
-},"请输入正确的身份证号码(15-18位)")
+},"请填写正确的身份证号码(15-18位)");
+
+// 比较大小，使用方法 isMorethan:param["#id","中文标识"]
+jQuery.validator.addMethod("isMorethan",function(value, element, params){
+    return this.optional(element) || value <= $(params[0]).val();
+},"不能大于{1}");
 
 //验证身份证函数
 function checkIdcard(idcard){

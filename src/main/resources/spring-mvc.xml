@@ -11,7 +11,10 @@
 	<!-- 添加注解驱动 -->  
     <mvc:annotation-driven />
 	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
-	<context:component-scan base-package="com.gerry.authsystem.controller" />
+	<context:component-scan base-package="com.gerry.authsystem">
+		<context:include-filter type="regex" expression="com\.gerry\.authsystem\..*controller.*"/> 
+		<!--<context:exclude-filter type="regex" expression=""/>  -->
+	</context:component-scan>
 	<!-- 过滤静态文件的拦截   -->  
     <mvc:default-servlet-handler/>  
 	
